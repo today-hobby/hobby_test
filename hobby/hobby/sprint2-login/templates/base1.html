@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sprint2</title>
+</head>
+<body>
+    <header>
+        {% block user %}{% endblock %}
+    </header>
+
+    <!-- 플래시 메시지 출력 부분 -->
+    <div>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="alert alert-danger text-center" role="alert">
+                    {{ messages[0] }}
+                </div>
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    {% block contents %}{% endblock %}
+    
+    <footer></footer>
+</body>
+</html>

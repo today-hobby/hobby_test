@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+
+{% block contents %}
+<div class="quiz-page">
+  <div class="quiz-content">
+
+    <!-- 페이지2: 안내 문구 없음 -->
+
+    <form action="{{ url_for('quiz_page2') }}" method="POST">
+      <!-- Q8 -->
+      <section class="question">
+        <div class="q-text">8. 여기에 질문 문구가 한 줄로 들어갑니다.</div>
+        <div class="answer-box">
+          <div class="options">
+            <div class="option">
+              <input type="radio" id="q8_a" name="q8" value="A" {% if form and form.get('q8') == 'A' %}checked{% endif %}>
+              <label for="q8_a">대답 A</label>
+            </div>
+            <div class="option">
+              <input type="radio" id="q8_b" name="q8" value="B" {% if form and form.get('q8') == 'B' %}checked{% endif %}>
+              <label for="q8_b">대답 B</label>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Q9 -->
+      <section class="question">
+        <div class="q-text">9. 질문 문구.</div>
+        <div class="answer-box">
+          <div class="options">
+            <div class="option">
+              <input type="radio" id="q9_a" name="q9" value="A" {% if form and form.get('q9') == 'A' %}checked{% endif %}>
+              <label for="q9_a">대답 A</label>
+            </div>
+            <div class="option">
+              <input type="radio" id="q9_b" name="q9" value="B" {% if form and form.get('q9') == 'B' %}checked{% endif %}>
+              <label for="q9_b">대답 B</label>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Q10 -->
+      <section class="question">
+        <div class="q-text">10. 질문 문구.</div>
+        <div class="answer-box">
+          <div class="options">
+            <div class="option">
+              <input type="radio" id="q10_a" name="q10" value="A" {% if form and form.get('q10') == 'A' %}checked{% endif %}>
+              <label for="q10_a">대답 A</label>
+            </div>
+            <div class="option">
+              <input type="radio" id="q10_b" name="q10" value="B" {% if form and form.get('q10') == 'B' %}checked{% endif %}>
+              <label for="q10_b">대답 B</label>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Q11 -->
+      <section class="question">
+        <div class="q-text">11. 질문 문구.</div>
+        <div class="answer-box">
+          <div class="options">
+            <div class="option">
+              <input type="radio" id="q11_a" name="q11" value="A" {% if form and form.get('q11') == 'A' %}checked{% endif %}>
+              <label for="q11_a">대답 A</label>
+            </div>
+            <div class="option">
+              <input type="radio" id="q11_b" name="q11" value="B" {% if form and form.get('q11') == 'B' %}checked{% endif %}>
+              <label for="q11_b">대답 B</label>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Q12 -->
+      <section class="question">
+        <div class="q-text">12. 질문 문구.</div>
+        <div class="answer-box">
+          <div class="options">
+            <div class="option">
+              <input type="radio" id="q12_a" name="q12" value="A" {% if form and form.get('q12') == 'A' %}checked{% endif %}>
+              <label for="q12_a">대답 A</label>
+            </div>
+            <div class="option">
+              <input type="radio" id="q12_b" name="q12" value="B" {% if form and form.get('q12') == 'B' %}checked{% endif %}>
+              <label for="q12_b">대답 B</label>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Q13 -->
+      <section class="question">
+        <div class="q-text">13. 질문 문구.</div>
+        <div class="answer-box">
+          <div class="options">
+            <div class="option">
+              <input type="radio" id="q13_a" name="q13" value="A" {% if form and form.get('q13') == 'A' %}checked{% endif %}>
+              <label for="q13_a">대답 A</label>
+            </div>
+            <div class="option">
+              <input type="radio" id="q13_b" name="q13" value="B" {% if form and form.get('q13') == 'B' %}checked{% endif %}>
+              <label for="q13_b">대답 B</label>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Q14 -->
+      <section class="question">
+        <div class="q-text">14. 질문 문구.</div>
+        <div class="answer-box">
+          <div class="options">
+            <div class="option">
+              <input type="radio" id="q14_a" name="q14" value="A" {% if form and form.get('q14') == 'A' %}checked{% endif %}>
+              <label for="q14_a">대답 A</label>
+            </div>
+            <div class="option">
+              <input type="radio" id="q14_b" name="q14" value="B" {% if form and form.get('q14') == 'B' %}checked{% endif %}>
+              <label for="q14_b">대답 B</label>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="nav-area">
+        <button class="next-btn" type="submit">다음</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<style>
+  .quiz-page{
+    width: 1920px;
+    min-height: 4578px;
+    margin: 0 auto;
+    background: url("{{ url_for('static', filename='배경2-2.png') }}") top center no-repeat;
+    background-size: 1920px auto;
+    position: relative;
+  }
+  .quiz-content{
+    width: 1200px;
+    margin: 0 auto;
+    padding-top: 180px;  /* 페이지1과 줄 맞춤 */
+  }
+  .question{ margin: 120px 0; }
+  .q-text{ font-size:24px; font-weight:700; color:#333; margin-bottom:20px; }
+
+  .answer-box{ background: rgba(255,255,255,0.9); border-radius:14px; padding:22px; }
+  .options{ display:flex; gap:24px; }
+  .option{ flex:1 1 0; background:#fff; border:1px solid #e3e3e3; border-radius:12px; padding:18px 16px; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:transform .08s ease; }
+  .option:hover{ transform: translateY(-2px); }
+  .option input[type="radio"]{ display:none; }
+  .option label{ font-size:18px; font-weight:600; color:#444; cursor:pointer; }
+  .option input[type="radio"]:checked + label{ color:#3D54FF; }
+
+  .nav-area{ display:flex; justify-content:flex-end; margin:140px 0 160px; }
+  .next-btn{ background:#3D54FF; color:#fff; border:0; border-radius:12px; padding:16px 32px; font-size:18px; font-weight:700; cursor:pointer; }
+
+  @media (max-width: 1920px){
+    body{ overflow-x:auto; }
+  }
+</style>
+{% endblock contents %}
