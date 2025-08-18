@@ -35,8 +35,10 @@ def login():
 def login_done():
     uid = request.form.get("id")
     pwd = request.form.get("pwd")
+    mbti = DB.request_mbti(uid)
     if DB.login(uid, pwd):
         session["uid"] = uid
+        session["hobby_mbti"]=mbti
         return redirect(url_for("home"))  # 로그인 후 홈 페이지로 이동
     else:
         flash("아이디가 없거나 비밀번호가 틀립니다.")
@@ -46,6 +48,7 @@ def login_done():
 def logout():
     if "uid" in session:
         session.pop("uid")
+        session.pop("hobby_mbti")
         return redirect(url_for("login"))
     else:
         return redirect(url_for("login"))
@@ -66,7 +69,7 @@ def signin_done():
         print("회원가입 성공")
         return redirect(url_for("index"))
     else:
-        flash("중복된 아이디입니다.")
+        flash("중복된 아이디입니다.", "signin_error")
         print("중복된 아이디입니다.")  # 중복된 아이디일 경우 플래시 메시지 추가
         return redirect(url_for("signin"))  # redirect를 사용하여 signin 페이지로 이동
     
@@ -154,16 +157,19 @@ def quiz_page1():
         return redirect(url_for("login"))
 
     if request.method == "POST":
+        # 제출된 값만 저장 (None으로 덮어쓰지 않음)
         for i in range(1, 8):
-            session[f"q{i}"] = request.form.get(f"q{i}")
-        required = [f"q{i}" for i in range(1, 8)]  
-        missing = [name for name in required if not request.form.get(name)]
+            val = request.form.get(f"q{i}")
+            if val is not None:
+                session[f"q{i}"] = val
+
+        # 백엔드 보조검증(비정상 요청 대비)
+        missing = [f"q{i}" for i in range(1, 8) if not session.get(f"q{i}")]
         if missing:
-            flash("안 푼 문제가 있습니다")  # quiz1으로 그대로
-            # 이미 입력한 값 유지하려면 넘겨서 렌더링
-            return render_template('quiz_page1.html', form=request.form)
-        else:
-            return redirect(url_for("quiz_page2"))
+            # 프론트에서 이미 막지만, 혹시 모를 경우를 대비
+            flash("안 푼 문제가 있습니다")
+            return render_template("quiz_page1.html")
+        return redirect(url_for("quiz_page2"))
 
     return render_template("quiz_page1.html")
 
@@ -175,30 +181,29 @@ def quiz_page2():
 
     if request.method == "POST":
         for i in range(8, 15):
-            session[f"q{i}"] = request.form.get(f"q{i}")
-        required = [f"q{i}" for i in range(8, 15)] 
-        missing = [name for name in required if not request.form.get(name)]
+            val = request.form.get(f"q{i}")
+            if val is not None:
+                session[f"q{i}"] = val
+
+        missing = [f"q{i}" for i in range(8, 15) if not session.get(f"q{i}")]
         if missing:
-            flash("안 푼 문제가 있습니다")  # quiz2으로 그대로
-            # 이미 입력한 값 유지하려면 넘겨서 렌더링
-            return render_template('quiz_page2.html', form=request.form)
-        else:
-            return redirect(url_for("quiz_page3"))
+            flash("안 푼 문제가 있습니다")
+            return render_template("quiz_page2.html")
+        return redirect(url_for("quiz_page3"))
 
     return render_template("quiz_page2.html")
 
+def count_A(start, end, answers):
+        return sum(1 for i in range(start, end+1) if answers.get(f"q{i}") == "A")
 
 def compute_hobby_mbti(answers: dict) -> str:
     """
     answers: {'q1':'A'/'B', ..., 'q21':'A'/'B'} 형태
     A가 4개 이상이면 앞글자 선택(C/M, A/P, F/R)
     """
-    def count_A(start, end):
-        return sum(1 for i in range(start, end+1) if answers.get(f"q{i}") == "A")
-
-    cm = "C" if count_A(1, 7)  >= 4 else "M"
-    ap = "A" if count_A(8, 14) >= 4 else "P"
-    fr = "F" if count_A(15, 21) >= 4 else "R"
+    cm = "C" if count_A(1, 7, answers)  >= 4 else "M"
+    ap = "A" if count_A(8, 14, answers) >= 4 else "P"
+    fr = "F" if count_A(15, 21, answers) >= 4 else "R"
     return cm + ap + fr
 
 
@@ -209,16 +214,17 @@ def quiz_page3():
 
     if request.method == "POST":
         for i in range(15, 22):
-            session[f"q{i}"] = request.form.get(f"q{i}")
-        required = [f"q{i}" for i in range(15, 22)]  
-        missing = [name for name in required if not request.form.get(name)]
+            val = request.form.get(f"q{i}")
+            if val is not None:
+                session[f"q{i}"] = val
+
+        missing = [f"q{i}" for i in range(15, 22) if not session.get(f"q{i}")]
         if missing:
-            flash("안 푼 문제가 있습니다")  # quiz3으로 그대로
-            # 이미 입력한 값 유지하려면 넘겨서 렌더링
-            return render_template('quiz_page3.html', form=request.form)
+            flash("안 푼 문제가 있습니다")
+            return render_template("quiz_page3.html")
 
         # 모든 답변 dict 만들기
-        answers = {f"q{str(i).zfill(2)}": session.get(f"q{i}") for i in range(1, 22)}
+        answers = {f"q{str(i)}": session.get(f"q{i}") for i in range(1, 22)}
 
         # MBTI 계산
         mbti = compute_hobby_mbti(answers)
@@ -226,8 +232,8 @@ def quiz_page3():
         # DB 저장용 payload (mbti 포함)
         payload = {"mbti": mbti, **answers}
 
-        if (DB.save_survey(session["uid"], answers)) and (DB.save_survey(session["uid"], payload)):
-            flash("설문이 성공적으로 저장되었습니다!")
+        if DB.save_survey(session["uid"], payload):
+            flash("설문이 성공적으로 저장되었습니다", "survey_success")
         else:
             flash("설문 저장에 실패했습니다.")
 

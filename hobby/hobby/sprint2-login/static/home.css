@@ -1,0 +1,292 @@
+/* ===== 공통 토큰 ===== */
+:root{
+  --left:#4a8b6d;      /* 왼쪽 배경(테마) */
+  --right:#ffffff;     /* 오른쪽 배경(테마) */
+  --accent:#3B7F62;    /* 포인트(테마) */
+  --ink:#0f172a;       /* 우측 본문 글자색 */
+  --ink-muted:#475569; /* 우측 보조 글자색 */
+  --shadow:0 18px 50px rgba(0,0,0,.08);
+  --radius:20px;
+}
+
+/* ===== 레이아웃 ===== */
+.home-wrap{
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: 0.7fr 1.3fr;   /* 좌/우 */
+}
+
+/* 좌측/우측 배경을 pseudo 로 그립니다 (각도 분할) */
+.home-wrap::before,
+.home-wrap::after{
+  content:"";
+  position:absolute; inset:0;
+  z-index:-2;
+}
+.home-wrap::before{ background: var(--right); }  /* 기본은 우측색으로 채움 */
+
+.home-wrap::after{
+  /* 왼쪽 사선 영역 */
+  background: var(--left);
+  /* 사선 각도 (원하면 수치 조정) */
+  clip-path: polygon(0 0, 58% 0, 48% 100%, 0 100%);
+}
+
+/* 내용 패널 */
+.pane{
+  padding: clamp(24px, 5vw, 64px);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+/* ===== 좌측(화이트 텍스트, 좌정렬) ===== */
+.pane-left{
+  color: #fff;
+  text-align: left;
+  padding-left: clamp(40px, 7vw, 130px); /* 좌측 여백 */  
+  justify-content: flex-start; /* 위쪽부터 배치 */
+  padding-top: 25%;           /* 원하는 만큼만 상단 여백 */
+  height: 100%;
+}
+.kicker{                    /* “나의 취미 유형은?” */
+  font-size: clamp(1rem, 1.5vw, 3rem);
+  letter-spacing: .02em;
+  opacity:.9;
+  margin: 0 0 .4rem;
+  font-weight: 600; /* ← 굵기 추가 (600~700 사이 추천) */
+  margin-bottom: 2%; /* 원하는 값으로 변경 (px, rem, % 등) */
+}
+/* 한 줄 배치 */
+.hero-title-wrap{
+  display: flex;
+  align-items: baseline;   /* 기준선 맞추기 */
+  gap: 6px;                /* 글자 간 간격 */
+  white-space: nowrap;     /* 줄바꿈 방지 */
+}
+
+.hero-title{               /* 가장 큰 호칭 */
+  font-size: clamp(3rem, 7vw, 7rem);
+  line-height: 1.05;
+  margin: 0 0 .8rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+.type-badge{               /* MPF 같은 축약형 */
+  display:inline-block;
+  margin-top: .2rem;
+  font-size: clamp(1.5rem, 4vw, 4rem);
+  font-weight: 800;
+  letter-spacing: .04em;
+}
+
+/* 좌측 하단 버튼 그룹 */
+.left-actions{
+  position: absolute;
+  bottom: clamp(16px, 4vh, 40px);  /* 하단 여백 */
+  left: clamp(24px, 5vw, 64px);    /* 좌측 여백(좌정렬 유지) */
+  right: auto;
+  display:flex; gap:12px;
+  margin-top: auto; /* 자동으로 맨 아래로 밀림 */
+  padding-bottom: 20px; /* 하단 여백 */
+}
+.btn{
+  display:inline-flex; align-items:center; justify-content:center;
+  height:44px; padding: 0 18px;
+  border-radius: 999px;
+  font-weight: 700;
+  text-decoration:none;
+  transition: transform .12s ease, opacity .12s ease, background .12s ease, color .12s ease;
+}
+.btn:active{ transform: translateY(1px); }
+.btn-outline-white{ border:2px solid #fff; color:#fff; background:transparent; }
+.btn-outline-white:hover{ opacity:.9; }
+.btn-white{
+  background:#fff; color: var(--accent); border:2px solid #fff;
+}
+.btn-white:hover{ background: #f1f5f9; }
+
+/* ===== 가운데 일러스트 ===== */
+.hero-illustration{
+  position: absolute;
+  left: 52%;
+  top: 70%;
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(var(--shadow));
+  pointer-events: none;
+  user-select: none;
+
+  /* 핵심: 뷰포트 기준으로 크기 조절 */
+  width: clamp(100px, 35vw, 550px);  /* 최소 180px, 보통 35vw, 최대 550px */
+  height: auto;
+}
+
+/* ===== 우측(검정 텍스트, 우정렬) ===== */
+.pane-right{
+  color: var(--ink);
+  text-align: right;
+  padding-right: clamp(60px, 10vw, 200px); /* 우측 여백 */  
+}
+.type-long{                /* “MPF: Minimal Passive Focused” */
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  font-weight: 800;
+  margin: 0 0 .4rem;
+  margin-bottom: 3%; /* 원하는 값으로 변경 (px, rem, % 등) */
+}
+.type-desc{                /* 설명 문구 */
+  font-size: clamp(.95rem, 1.2vw, 1.05rem);
+  color: var(--ink-muted);
+  line-height: 1.6;
+  margin: 0 0 1rem auto;
+  max-width: 44ch;         /* 두 줄~세 줄 정도로 고정 */
+  white-space: normal;    /* 기본 줄바꿈 가능 */
+  word-break: keep-all;   /* 단어 단위로만 줄바꿈 */
+  margin-bottom: 7%; /* 원하는 값으로 변경 (px, rem, % 등) */
+}
+
+/* 추천 영역 */
+.rec-kicker{
+  color: var(--accent);
+  font-weight: 800;
+  margin: .4rem 0 .6rem auto;
+  margin-bottom: 3%; /* 원하는 값으로 변경 (px, rem, % 등) */
+}
+.rec-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2개씩 배치 */
+  gap: 10px; /* 기존 간격 유지 */
+  margin-left: auto;        /* 우정렬 */
+  max-width: 520px;
+
+  /* 불릿 제거 + 기본 여백 제거 */
+  list-style: none;
+  padding: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+
+  text-align: right; /* 안의 글씨 우측 정렬 */
+}
+
+.rec-item {
+  background: rgba(255,255,255,.7);
+  border: 1px solid rgba(0,0,0,.06);
+  border-radius: 12px;
+  padding: 12px 14px;
+  text-align: right;
+  backdrop-filter: blur(2px);
+  transition: background .12s ease, transform .12s ease, border-color .12s ease;
+}
+
+.rec-item:hover{
+  background: rgba(255,255,255,.9);
+  transform: translateY(-1px);
+  border-color: rgba(0,0,0,.12);
+}
+
+/* 전체 레이아웃 */
+.no-result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #faf7ef; /* 노란색 배경 */
+  min-height: 100vh;         /* 화면 전체 높이 */
+}
+
+/* 가로 전체 초록 박스 */
+.no-result-banner {
+  width: 100%;
+  background-color: #68a680;
+  height: clamp(180px, 30vh, 300px); /* 반응형 높이 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.no-result-banner p {
+  color: #fff;
+  font-size: clamp(18px, 3.2vw, 25px);
+  font-weight: 600;
+  line-height: 1.6;
+  text-align: center;
+  margin: 0;
+}
+
+/* 버튼 영역 */
+.no-result-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 24px; /* 박스와 버튼 사이 간격 */
+}
+
+.no-result-actions .btn {
+  min-width: 180px;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  height: 38px;
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background: #68a680;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  text-align: center;
+}
+
+.no-result-actions .btn:hover {
+  background: #4b7c64;
+}
+
+.no-result-actions .btn.outline {
+  background: #fff;
+  border-color: #68a680;
+  color: #68a680;
+}
+
+.no-result-actions .btn.outline:hover {
+  background: rgba(111,169,138,0.08);
+}
+
+/* ===== 유형별 테마 (왼쪽/오른쪽/포인트 색만 교체) ===== */
+.theme-CAF{ --left:#b75d5d; --right:#ffffff; --accent:#735959; }
+.theme-CAR{ --left:#b7815d; --right:#ffffff; --accent:#736359; }
+.theme-CPR{ --left:#5d75b7; --right:#ffffff; --accent:#595d73; }
+.theme-MPR{ --left:#b7ae5d; --right:#ffffff; --accent:#736f59; }
+.theme-MAR{ --left:#5db7ab; --right:#ffffff; --accent:#59736f; }
+.theme-MAF{ --left:#805db7; --right:#ffffff; --accent:#665973; }
+.theme-CPF{ --left:#5db762; --right:#ffffff; --accent:#5b7359; }
+.theme-MPF{ --left:#b75d95; --right:#ffffff; --accent:#73596d; }
+
+/* ===== 반응형 ===== */
+@media (max-width: 1024px){
+  .hero-illustration{ width: min(280px, 42vw); left: 50%; }
+}
+
+@media (max-width: 768px){
+  .home-wrap{
+    grid-template-columns: 1fr;           /* 1열 스택 */
+  }
+  .home-wrap::after{
+    /* 상단을 테마색으로, 아래는 흰색 */
+    clip-path: polygon(0 0, 100% 0, 100% 56%, 0 70%);
+  }
+  .pane-left, .pane-right{ text-align: left; }
+  .type-desc, .rec-kicker, .rec-list{ margin-left: 0; margin-right: 0; }
+  .rec-list{ max-width: none; }
+  .hero-illustration{
+    position: static; transform:none; width: min(360px, 88vw);
+    margin: 16px auto -6px;
+  }
+  .left-actions{ flex-wrap: wrap; }
+}
+
+/* 반응형 보정 */
+@media (max-width: 768px){
+  .no-result::before{ inset: 0 0 56% 0; } /* 상단 영역 조금 늘림 */
+  .no-result .btn{ top: 64vh; }
+  .no-result .btn + .btn{ top: 76vh; }
+}

@@ -1,0 +1,191 @@
+/* ====== 공통 변수(2/3 기본값) ====== */
+body.quiz {
+  --q-start: 300px;     /* 첫 문항 시작 높이 (intro와 question 사이 간격에 간접영향) */
+  --q-gap: 80px;        /* 문항 간 간격 */
+  --opt-w: 500px;       /* 옵션 박스 너비 */
+  --opt-h: 64px;        /* 옵션 박스 높이 */
+  --opt-pad-x: 16px;    /* 옵션 좌우 패딩 */
+
+  /* 페이지별로 달라지는 값들(2/3 기본) */
+  --topbar-h: 6%;       /* 상단 띠 높이 */
+  --content-pt: 180px;  /* 본문 상단 여백 (intro 위/아래 배치 조절) */
+  --progress-top: clamp(8px, 3%, 1000px); /* 진행도 표시 Y 위치 */
+}
+
+/* ====== 페이지별 override ====== */
+body.quiz-1 {
+  --topbar-h: 11%;
+  --content-pt: 70px;
+  --progress-top: clamp(8px, 8%, 1000px);
+}
+
+/* ====== 리셋 ====== */
+body { margin: 0; }
+
+/* ====== 페이지 랩퍼 ====== */
+.quiz-page {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0 auto;
+  position: relative;
+  background: none;
+  background-color: #faf7ef;
+  padding-bottom: clamp(120px, 12vh, 240px); /* 버튼 아래 여백 */
+}
+.quiz-page::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 100%;
+  height: var(--topbar-h);
+  background-color: #68a680;
+  z-index: 0;
+}
+
+/* ====== 본문 영역 ====== */
+.quiz-content {
+  width: min(92vw, 1200px);
+  margin: 0 auto;
+  padding-top: var(--content-pt);
+}
+
+/* ====== 상단 안내(1페이지만 마크업 존재해도 무해) ====== */
+.intro {
+  font-size: 25px;
+  line-height: 1.6;
+  color: #ffffff;
+  margin: 0 0 var(--q-start);
+  text-align: center;
+  font-weight: 600;
+  position: relative;  /* z-index 적용용 */
+  z-index: 3;
+}
+
+/* ====== 질문 ====== */
+.question {
+  margin: var(--q-gap) 0;
+  padding-bottom: 80px;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  text-align: center;
+}
+.q-text {
+  font-size: 24px;
+  font-weight: 700;
+  color: #535353;
+  margin-bottom: 20px;
+}
+
+/* ====== 답변 박스 ====== */
+.answer-box {
+  background: none;
+  border: 0;
+  padding: 0;
+}
+
+/* ====== 옵션 ====== */
+.options {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.option {
+  flex: 0 0 var(--opt-w);
+  width: var(--opt-w);
+  min-width: 180px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: var(--opt-h);
+  padding: 0 var(--opt-pad-x);
+
+  background: #fff;
+  border: 1px solid #e3e3e3;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform .08s ease, border-color .15s ease, box-shadow .15s ease, color .15s ease;
+
+  font-size: 18px;
+  font-weight: 600;
+  color: #535353;
+  text-align: center;
+  line-height: 1.3;
+}
+.option:hover { transform: translateY(-2px); }
+
+/* 기본 라디오 숨김 */
+.option input[type="radio"] { display: none; }
+
+/* 선택 상태 (CSS :has 사용 버전) */
+.option:has(input[type="radio"]:checked) {
+  border-color: #68a680;
+  box-shadow: 0 0 0 3px rgba(61,84,255,0.12) inset;
+  color: #68a680;
+}
+
+/* ====== 네비게이션 ====== */
+.nav-area {
+  display: flex;
+  justify-content: center;
+  margin: 140px 0 100px;
+}
+.next-btn {
+  background: #68a680;
+  color: #fff;
+  border: none;
+  border-radius: 9999px;
+  padding: 16px 60px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.next-btn:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+
+/* ====== 헤더/네비 제거 ====== */
+header, nav {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* ====== 진행도 ====== */
+.progress-indicator {
+  position: absolute;
+  top: var(--progress-top);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 16px;
+  z-index: 2;
+  margin: 0;
+  padding: 0;
+}
+.circle {
+  width: 30px;
+  height: 30px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background: transparent;
+  transition: background-color .3s;
+}
+/* 마크업이 .circle active 라면 아래 유지, .filled를 쓰면 추가 */
+.circle.active { background: #fff; }
+/* .circle.filled { background: #fff; }  필요하면 주석 해제 */
+
+/* ====== 반응형 ====== */
+@media (max-width: 768px){
+  body.quiz {
+    --q-start: 200px;
+    --opt-w: 100%;
+    --opt-h: 56px;
+  }
+}
+
+/* (선택) 불필요할 가능성 높아 제거 권장
+@media (max-width: 1920px){ body { overflow-x: auto; } }
+*/

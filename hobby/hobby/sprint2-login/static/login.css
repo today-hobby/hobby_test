@@ -1,0 +1,193 @@
+body {
+    margin: 0;
+    background: url("/static/배경.png") no-repeat center center fixed;
+    background-size: cover;
+    font-family: "Nunito", sans-serif; /* Nunito로 변경 */
+}
+
+/* stage: 화면 전체를 비율 기반으로 */
+.stage {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* 제목 글씨 */
+.hobby-title {
+    position: absolute;
+    z-index: 10;
+    opacity: 0;
+    animation: fadeInUp 1s forwards;
+    font-family: 'Kirang Haerang', 'Nunito', sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: clamp(3rem, 8vw, 10rem); /* 화면 크기에 맞게 자동 조정 */
+}
+
+.personal {
+    top: 28%;
+    left: 14%;
+    color: #6e9ac4;
+    animation-delay: 0.1s;
+}
+
+.hobby {
+    top: 48%;
+    left: 30%;
+    color: #68a680;
+    animation-delay: 0.4s;
+}
+
+/* 로그인 박스 */
+.login-box {
+    position: absolute;
+    top: 30%;
+    right: 10%;
+    transform: translateY(-50%);
+    width: min(320px, 80vw); /* 화면 작으면 자동 축소 */
+    background-color: rgba(255, 255, 255, 0.6);
+    border-radius: 20px;
+    padding: 2rem;
+    opacity: 0;
+    animation: fadeInLogin 1s forwards;
+    animation-delay: 1s;
+}
+
+.login-box h2 {
+    margin-bottom: 20px;
+    color: #68a680;
+    text-align: center;
+    font-size: clamp(1.2rem, 2vw, 1.5rem);
+}
+
+.login-box button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 10px;
+    font-size: clamp(0.9rem, 1.5vw, 1rem);
+    background-color: #68a680;
+    color: white;
+    cursor: pointer;
+}
+
+.login-box a {
+    font-size: 12px;
+    color: #6f6f6f;
+    text-align: center;
+    display: block;
+    text-decoration: none;
+}
+
+/* 입력창 */
+.input-group {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.input-group label {
+    position: absolute;
+    top: 10px;
+    left: 2px;
+    font-size: 15px;
+    color: #68a680;
+    padding: 0 5px;
+    z-index: 2;
+    font-weight: 700; /* 기본 굵기 Bold로 변경 */
+}
+
+.input-group input {
+    width: 75%;
+    padding: 10px;
+    background-color: #dfdada;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    display: block;
+    margin-left: 50px;
+}
+
+/* 말풍선 */
+.speech {
+    position: absolute;
+    max-width: 12vw; /* 화면에 맞춰 자동 축소 */
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeIn 0.7s forwards;
+}
+
+#speech1 {
+    top: 35%;
+    left: 50%;
+    animation-delay: 0s;
+}
+
+#speech2 {
+    top: 5%;
+    left: 1%;
+    animation-delay: 0.5s;
+}
+
+#speech3 {
+    top: 9%;
+    left: 45%;
+    animation-delay: 0.6s;
+}
+
+#speech4 {
+    top: 60%;
+    left: 3%;
+    animation-delay: 0.8s;
+}
+
+/* 애니메이션 */
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInLogin {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 반응형 조정 */
+@media (max-width: 768px) {
+    .personal {
+        top: 20%;
+        left: 8%;
+    }
+    .hobby {
+        top: 38%;
+        left: 20%;
+    }
+    .login-box {
+        top: 55%;
+        right: 50%;
+        transform: translate(50%, -50%);
+    }
+    .speech {
+        max-width: 20vw;
+    }
+}

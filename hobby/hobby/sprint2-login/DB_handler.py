@@ -74,7 +74,9 @@ class DBModule:
         except Exception as e:
             print("설문 저장 오류:", e)
             return False
-
+        
+    def request_mbti(self, uid):
+        return self.db.child("users").child(uid).child("survey_answers").child("mbti").get().val()
 
 
     

@@ -1,26 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sprint2</title>
-    <!-- 폰트 링크 추가 -->
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- 페이지별로 바꿀 수 있는 제목 -->
+    <title>{% block title %}sprint2{% endblock title %}</title>
+
+    <!-- (공통) 폰트만 전역 로드 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Kirang+Haerang&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+
+
+
+    <!-- (선택) 전역 최소 초기화만 정말 필요하면 여기에 -->
+    <style>
+        html, body { height: 100%; margin:0; padding:0; background-color: #f5f7fb;}
+    </style>
+
+    <!-- 각 페이지가 자기 CSS를 꽂는 자리 -->
+    {% block head %}{% endblock head %}
 
 </head>
-<body>
-    <header>
-        {% block user %}
-        {% endblock user %}
-    </header>
 
-    {% block contents %}
-    {% endblock contents %}
+<body class="{% block body_class %}{% endblock body_class %}">
+  <header>
+    {% block user %}{% endblock user %}
+  </header>
 
-    <footer>
-    </footer>
+    {% block contents %}{% endblock contents %}
+  
+    {% block scripts %}{% endblock scripts %}
+
+  <footer></footer>
 </body>
 </html>
 

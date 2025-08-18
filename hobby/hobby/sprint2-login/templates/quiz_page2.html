@@ -1,130 +1,144 @@
 {% extends "base.html" %}
 
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='quiz_page.css') }}">
+{% endblock head %}
+
+{% block title %}퀴즈_2{% endblock title %}
+{% block body_class %}quiz quiz-2{% endblock body_class %}
+
 {% block contents %}
+
 <div class="quiz-page">
+  <div class="progress-indicator">
+    <div class="circle"></div>
+    <div class="circle active"></div>
+    <div class="circle"></div>
+  </div>
   <div class="quiz-content">
 
-    <!-- 페이지2: 안내 문구 없음 -->
+    <!-- 폼 -->
+    <form id="quizForm" action="{{ url_for('quiz_page2') }}" method="POST">
 
-    <form action="{{ url_for('quiz_page2') }}" method="POST">
       <!-- Q8 -->
       <section class="question">
-        <div class="q-text">8. 여기에 질문 문구가 한 줄로 들어갑니다.</div>
+        <div class="q-text">오랜 시간 침대에 누워있으면 나는</div>
         <div class="answer-box">
           <div class="options">
-            <div class="option">
-              <input type="radio" id="q8_a" name="q8" value="A" {% if form and form.get('q8') == 'A' %}checked{% endif %}>
-              <label for="q8_a">대답 A</label>
-            </div>
-            <div class="option">
-              <input type="radio" id="q8_b" name="q8" value="B" {% if form and form.get('q8') == 'B' %}checked{% endif %}>
-              <label for="q8_b">대답 B</label>
-            </div>
+            <label class="option">
+              <input type="radio" name="q8" value="A">
+              지루하고 답답하다
+            </label>
+            <label class="option">
+              <input type="radio" name="q8" value="B">
+              편안하고 좋다
+            </label>
           </div>
         </div>
       </section>
 
       <!-- Q9 -->
       <section class="question">
-        <div class="q-text">9. 질문 문구.</div>
+        <div class="q-text">하루 일정이 없으면 나는</div>
         <div class="answer-box">
           <div class="options">
-            <div class="option">
-              <input type="radio" id="q9_a" name="q9" value="A" {% if form and form.get('q9') == 'A' %}checked{% endif %}>
-              <label for="q9_a">대답 A</label>
-            </div>
-            <div class="option">
-              <input type="radio" id="q9_b" name="q9" value="B" {% if form and form.get('q9') == 'B' %}checked{% endif %}>
-              <label for="q9_b">대답 B</label>
-            </div>
+            <label class="option">
+              <input type="radio" name="q9" value="A">
+              뭐라도 하러 나가는 편이다
+            </label>
+            <label class="option">
+              <input type="radio" name="q9" value="B">
+              침대와 함께하는 편이다
+            </label>
           </div>
         </div>
       </section>
 
       <!-- Q10 -->
       <section class="question">
-        <div class="q-text">10. 질문 문구.</div>
+        <div class="q-text">혼자있을 때 "심심하다"는 생각이</div>
         <div class="answer-box">
           <div class="options">
-            <div class="option">
-              <input type="radio" id="q10_a" name="q10" value="A" {% if form and form.get('q10') == 'A' %}checked{% endif %}>
-              <label for="q10_a">대답 A</label>
-            </div>
-            <div class="option">
-              <input type="radio" id="q10_b" name="q10" value="B" {% if form and form.get('q10') == 'B' %}checked{% endif %}>
-              <label for="q10_b">대답 B</label>
-            </div>
+            <label class="option">
+              <input type="radio" name="q10" value="A">
+              자주 든다
+            </label>
+            <label class="option">
+              <input type="radio" name="q10" value="B">
+              거의 들지 않는다
+            </label>
           </div>
         </div>
       </section>
 
       <!-- Q11 -->
       <section class="question">
-        <div class="q-text">11. 질문 문구.</div>
+        <div class="q-text">여행지에서 나는</div>
         <div class="answer-box">
           <div class="options">
-            <div class="option">
-              <input type="radio" id="q11_a" name="q11" value="A" {% if form and form.get('q11') == 'A' %}checked{% endif %}>
-              <label for="q11_a">대답 A</label>
-            </div>
-            <div class="option">
-              <input type="radio" id="q11_b" name="q11" value="B" {% if form and form.get('q11') == 'B' %}checked{% endif %}>
-              <label for="q11_b">대답 B</label>
-            </div>
+            <label class="option">
+              <input type="radio" name="q11" value="A">
+              일찍 나가서 많이 돌아다니는 것을 선호한다
+            </label>
+            <label class="option">
+              <input type="radio" name="q11" value="B">
+              느긋한 일정을 선호한다
+            </label>
           </div>
         </div>
       </section>
 
       <!-- Q12 -->
       <section class="question">
-        <div class="q-text">12. 질문 문구.</div>
+        <div class="q-text">행사나 체험 부스를 봤을 때 나는</div>
         <div class="answer-box">
           <div class="options">
-            <div class="option">
-              <input type="radio" id="q12_a" name="q12" value="A" {% if form and form.get('q12') == 'A' %}checked{% endif %}>
-              <label for="q12_a">대답 A</label>
-            </div>
-            <div class="option">
-              <input type="radio" id="q12_b" name="q12" value="B" {% if form and form.get('q12') == 'B' %}checked{% endif %}>
-              <label for="q12_b">대답 B</label>
-            </div>
+            <label class="option">
+              <input type="radio" name="q12" value="A">
+              최대한 골고루 참여한다
+            </label>
+            <label class="option">
+              <input type="radio" name="q12" value="B">
+              참여하지 않는다
+            </label>
           </div>
         </div>
       </section>
 
       <!-- Q13 -->
       <section class="question">
-        <div class="q-text">13. 질문 문구.</div>
+        <div class="q-text">에너지를 쓰지 않아 넘칠 때</div>
         <div class="answer-box">
           <div class="options">
-            <div class="option">
-              <input type="radio" id="q13_a" name="q13" value="A" {% if form and form.get('q13') == 'A' %}checked{% endif %}>
-              <label for="q13_a">대답 A</label>
-            </div>
-            <div class="option">
-              <input type="radio" id="q13_b" name="q13" value="B" {% if form and form.get('q13') == 'B' %}checked{% endif %}>
-              <label for="q13_b">대답 B</label>
-            </div>
+            <label class="option">
+              <input type="radio" name="q13" value="A">
+              어서 쓰러 나가고싶다
+            </label>
+            <label class="option">
+              <input type="radio" name="q13" value="B">
+              계속 아끼고싶다
+            </label>
           </div>
         </div>
       </section>
 
       <!-- Q14 -->
       <section class="question">
-        <div class="q-text">14. 질문 문구.</div>
+        <div class="q-text">외출 후 집에 돌아왔을 때</div>
         <div class="answer-box">
           <div class="options">
-            <div class="option">
-              <input type="radio" id="q14_a" name="q14" value="A" {% if form and form.get('q14') == 'A' %}checked{% endif %}>
-              <label for="q14_a">대답 A</label>
-            </div>
-            <div class="option">
-              <input type="radio" id="q14_b" name="q14" value="B" {% if form and form.get('q14') == 'B' %}checked{% endif %}>
-              <label for="q14_b">대답 B</label>
-            </div>
+            <label class="option">
+              <input type="radio" name="q14" value="A">
+              다음 외출이 기다려진다
+            </label>
+            <label class="option">
+              <input type="radio" name="q14" value="B">
+              한동안 휴식을 취하고싶다
+            </label>
           </div>
         </div>
       </section>
+
 
       <div class="nav-area">
         <button class="next-btn" type="submit">다음</button>
@@ -133,36 +147,8 @@
   </div>
 </div>
 
-<style>
-  .quiz-page{
-    width: 1920px;
-    min-height: 4578px;
-    margin: 0 auto;
-    background: url("{{ url_for('static', filename='배경2-2.png') }}") top center no-repeat;
-    background-size: 1920px auto;
-    position: relative;
-  }
-  .quiz-content{
-    width: 1200px;
-    margin: 0 auto;
-    padding-top: 180px;  /* 페이지1과 줄 맞춤 */
-  }
-  .question{ margin: 120px 0; }
-  .q-text{ font-size:24px; font-weight:700; color:#333; margin-bottom:20px; }
-
-  .answer-box{ background: rgba(255,255,255,0.9); border-radius:14px; padding:22px; }
-  .options{ display:flex; gap:24px; }
-  .option{ flex:1 1 0; background:#fff; border:1px solid #e3e3e3; border-radius:12px; padding:18px 16px; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:transform .08s ease; }
-  .option:hover{ transform: translateY(-2px); }
-  .option input[type="radio"]{ display:none; }
-  .option label{ font-size:18px; font-weight:600; color:#444; cursor:pointer; }
-  .option input[type="radio"]:checked + label{ color:#3D54FF; }
-
-  .nav-area{ display:flex; justify-content:flex-end; margin:140px 0 160px; }
-  .next-btn{ background:#3D54FF; color:#fff; border:0; border-radius:12px; padding:16px 32px; font-size:18px; font-weight:700; cursor:pointer; }
-
-  @media (max-width: 1920px){
-    body{ overflow-x:auto; }
-  }
-</style>
 {% endblock contents %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='quiz_page.js') }}"></script>
+{% endblock scripts %}
